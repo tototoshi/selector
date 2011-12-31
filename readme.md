@@ -3,7 +3,7 @@
 ## Example
 
 ```scala
-val xml =
+val html =
   <html>
     <head>
         <title>
@@ -33,7 +33,7 @@ val xml =
 
 val $ = new Selector(html)
 
-println($("div#container2 span.class").text) //=> oshogatsu
+println($("div#container2 span.contents").text) //=> oshogatsu
 
 ```
 
