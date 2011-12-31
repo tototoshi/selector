@@ -33,7 +33,7 @@ val html =
 
 val $ = new Selector(html)
 
-println($("div#container2 span.contents").text) //=> oshogatsu
+println($("div#container2 span.foo").text) //=> oshogatsu
 
 ```
 
