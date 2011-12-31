@@ -16,6 +16,7 @@ trait SelectorParser extends RegexParsers {
 
   def idFilter(id: String): Filter = n => (n \ "@id" text) == id
   def classFilter(cls: String): Filter = n => (n \ "@class" text) == cls
+  def attrFilter(attrName: String, attr: String): Filter = n => (n \ ("@" + attrName) text) == attr
   def all: Filter = _ => true
 
   def idPrefix = "#"
@@ -25,7 +26,10 @@ trait SelectorParser extends RegexParsers {
 
   def id = idPrefix ~> token ^^ idFilter
   def cls = classPrefix ~> token ^^ classFilter
-  def attr = id | cls
+  def otherAttr = "[" ~> token ~ "=" ~ token <~ "]" ^^ {
+    case attrName ~ equal ~ attr => attrFilter(attrName, attr)
+  }
+  def attr = id | cls | otherAttr
 
   def selector: Parser[Extractor] = tag ~ opt(attr) ^^ {
     case t ~ Some(a) => t(a)
