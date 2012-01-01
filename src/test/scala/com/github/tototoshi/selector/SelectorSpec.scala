@@ -31,8 +31,11 @@ class SelectorSpec extends Spec {
                       <span class="foo">gatsu</span>
                   </div>
               </div>
-              <div id="container2">
+              <div id="container3">
                 <a href="aaa">bar</a>
+              </div>
+              <div id="container4">
+                <a href="a.a.a">baz</a>
               </div>
           </body>
         </html>
@@ -56,6 +59,8 @@ class SelectorSpec extends Spec {
       assert("oshogatsu" === $("div#container2 span.foo").text)
 
       assert("bar" === $("a[href=aaa]").text)
+
+      assert($("a[href=a.a.a]").text === "baz")
     }
 
   }

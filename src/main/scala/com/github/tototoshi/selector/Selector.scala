@@ -22,11 +22,12 @@ trait SelectorParser extends RegexParsers {
   def idPrefix = "#"
   def classPrefix = "."
   def token = """[a-zA-Z0-9-_:]+""".r
+  def attrAvailableChars = """[a-zA-Z0-9-_:.#]+""".r
   def tag = token ^^ tagSelector
 
-  def id = idPrefix ~> token ^^ idFilter
-  def cls = classPrefix ~> token ^^ classFilter
-  def otherAttr = "[" ~> token ~ "=" ~ token <~ "]" ^^ {
+  def id = idPrefix ~> attrAvailableChars ^^ idFilter
+  def cls = classPrefix ~> attrAvailableChars ^^ classFilter
+  def otherAttr = "[" ~> token ~ "=" ~ attrAvailableChars <~ "]" ^^ {
     case attrName ~ equal ~ attr => attrFilter(attrName, attr)
   }
   def attr = id | cls | otherAttr
